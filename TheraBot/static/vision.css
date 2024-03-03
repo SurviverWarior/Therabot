@@ -1,0 +1,75 @@
+body {
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4; /* Adjust the background color if needed */
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A593E0; /* Soft purple color inspired by the logo */
+    padding: 10px 0;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  }
+  
+  .navbar img {
+    max-width: 100px;  
+    height: auto;  
+    border-radius: 50px;
+    border: 1px solid #f4f4f4;
+    will-change: filter;
+    transition: filter 300ms;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .navbar a:hover {
+    background-color: rgb(203, 195, 227); /* A darker shade for hover effect */
+    color: white;
+  }
+
+  textarea {
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px 0 rgba(212, 5, 5, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    margin-top: 500px;
+  }
+
+  #logo {
+    width: 50px;
+    height: auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  p {
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    p {
+        width: 90%;
+    }
+  }

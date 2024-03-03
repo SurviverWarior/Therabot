@@ -1,0 +1,295 @@
+,<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Therapist</title>
+<style>
+body {
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fef1fa; /* Adjust the background color if needed */
+}
+  
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A593E0; /* Soft purple color inspired by the logo */
+    padding: 10px 0;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.navbar img {
+    max-width: 100px;  
+    height: auto;  
+    border-radius: 50px;
+    border: 1px solid #f4f4f4;
+    will-change: filter;
+    transition: filter 300ms;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+  
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    margin: 0 10px;
+}
+  
+.navbar a:hover {
+    background-color: rgb(203, 195, 227); /* A darker shade for hover effect */
+    color: white;
+}
+  
+.container {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+  
+textarea {
+    width: 90%; /* Making it wider */
+    min-height: 50px; /* Starting height */
+    padding: 10px 15px; /* Adding some padding inside the textarea */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow for a cleaner look */
+    border: 2px solid #A593E0; /* Border color to match the theme */
+    border-radius: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Adding margin to the bottom as well */
+    font-family: 'Courier New', monospace;
+    font-size: 1em; /* Adjust font size if necessary */
+    background-color: #fff; /* White background to stand out */
+    color: #333; /* Text color */
+    transition: border-color 0.3s; /* Smooth transition for focus effect */
+    overflow: hidden; /* Hide the scrollbar */
+    resize: none; /* Disable resizing */
+}
+
+textarea:focus {
+    border-color: #87ec87; /* Mint green border on focus */
+    outline: none; /* Remove default focus outline */
+}
+  
+button {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #A593E0; /* Soft purple color for buttons */
+    color: white;
+    border: none;
+}
+  
+button:hover {
+    background-color: #6D44B8; /* A darker shade for button hover effect */
+}
+  
+.audio-player {
+    margin-top: 20px;
+    padding: 10px;
+    width: 60%; /* Adjust the width as necessary */
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fef1fa; /* Light purple background to match the theme */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #A593E0;
+    border-radius: 20px;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-volume-slider,
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-timeline {
+    color: #f4f4f4;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #fff;
+}
+
+.userInput img{
+    max-width: 100px;  
+    height: auto;  
+    border-radius: 60px;
+    border: 1px solid #f4f4f4;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 60px;
+    position: relative;
+    left: 1250px; /* Adjusted for better positioning */
+}
+#firstOpinionButton, #secondOpinionButton {
+    cursor: pointer;
+    margin-top: 20px; /* Space above the buttons */
+    width: 200px; /* Smaller width for the buttons */
+    height: auto; /* Maintain aspect ratio */
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    transition: transform 0.2s; /* Smooth transition for feedback */
+}
+
+#firstOpinionButton:hover, #secondOpinionButton:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover for feedback */
+}
+#response {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #EDE7F6; /* Light purple, matching the theme */
+    color: #333; /* Dark text color for readability */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Courier New', monospace;
+    min-height: 100px; /* Ensure it's visibly present even when empty */
+    width: 80%; /* Match the container width */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+.active {
+    outline: 4px solid #87ec87; /* mint green outline */
+  
+}
+@keyframes jump {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.robot {
+  display: block;
+  margin: 20px auto;
+  width: 70px;
+  animation: jump 0.5s ease-in-out infinite;
+}
+
+</style>
+</head>
+<body>
+<div class="navbar">    
+  <a href="aboutUS.html">About Us</a>
+  <a href="vision.html">Vision</a>
+  <a href="splash.html"><img src="Logo.jpeg" alt="TheraBot Logo" id="logo"></a>
+  <a href="help.html">Help</a>
+  <a href="connect.html">Connect</a>
+</div>
+<div class="container">
+  <textarea id="userInput" placeholder="  How can I assist you today?"></textarea>
+  <img src="Daniel.jpeg" alt="Get First Opinion" id="firstOpinionButton" onclick="getFirstOpinion()">
+  <img src="Laura.jpeg" alt="Get Second Opinion" id="secondOpinionButton" onclick="getSecondOpinion()">
+  <div id="response"></div>
+</div>
+
+  </div>
+  <audio id="audioPlayer" class="audio-player" controls></audio>
+</div>
+<script>
+const serverURL = 'http://127.0.0.1:5000';
+
+function typeOutText(html, elementId, audioUrl) {
+    const elem = document.getElementById(elementId);
+    elem.innerHTML = "";
+    const audioPlayer = document.getElementById('audioPlayer');
+    
+    // Start playing the audio
+    audioPlayer.src = audioUrl;
+    audioPlayer.load();
+    audioPlayer.play().catch(e => console.error('Error playing audio:', e));
+
+    // Split the HTML by <br> to process as separate lines
+    let lines = html.split('<br>');
+    let currentLine = 0;
+    let i = 0;
+    function typeLine() {
+        if (currentLine < lines.length) {
+            if (i < lines[currentLine].length) {
+                elem.innerHTML += lines[currentLine].charAt(i);
+                i++;
+                setTimeout(typeLine, 50); // Typing speed
+            } else {
+                elem.innerHTML += '<br>'; // Move to the next line
+                i = 0;
+                currentLine++;
+                setTimeout(typeLine, 1000); // Delay before starting the next line
+            }
+        }
+        if (currentLine >= lines.length) {
+            // Once typing is done, remove the active class from both buttons
+            document.getElementById('firstOpinionButton').classList.remove('active');
+            document.getElementById('secondOpinionButton').classList.remove('active');
+        }
+
+    }
+    typeLine();
+}
+
+function showLoadingRobot() {
+  const elem = document.getElementById('response');
+  elem.innerHTML = '<img src="robot.jpeg" alt="Loading..." class="robot">';
+}
+
+function getFirstOpinion() {
+    const text = document.getElementById('userInput').value;
+    const endpoint = `${serverURL}/firstopinion?text=${encodeURIComponent(text)}&audio=True`;
+    document.getElementById('firstOpinionButton').classList.add('active');
+    showLoadingRobot(); // Show the loading robot
+    fetch(endpoint)
+        .then(response => response.text())
+        .then(data => {
+        const formattedText = data.replace(/(?:\r\n|\r|\n)/g, '<br>'); // Ensure new lines are formatted correctly
+        const audioUrl = `${serverURL}/audio/firstopinion/speech_English.mp3`;
+        typeOutText(formattedText, 'response', audioUrl);
+    })
+        .catch(error => console.error('Error:', error));
+}
+
+function getSecondOpinion() {
+    const text = document.getElementById('userInput').value;
+    const endpoint = `${serverURL}/secondopinion?text=${encodeURIComponent(text)}&audio=True`;
+    document.getElementById('secondOpinionButton').classList.add('active');
+    showLoadingRobot(); // Show the loading robot
+    fetch(endpoint)
+        .then(response => response.text())
+        .then(data => {
+        const formattedText = data.replace(/(?:\r\n|\r|\n)/g, '<br>'); // Ensure new lines are formatted correctly
+        const audioUrl = `${serverURL}/audio/secondopinion/speech_English.mp3`;
+        typeOutText(formattedText, 'response', audioUrl);
+    })
+        .catch(error => console.error('Error:', error));
+}
+
+function updateAudioPlayer(opinion) {
+  const language = 'English'; // This can be dynamic based on user selection
+  const audioPlayer = document.getElementById('audioPlayer');
+  const filename = `speech_${language}.mp3`; // The audio filename
+  audioPlayer.src = `${serverURL}/audio/${opinion}/${filename}`;
+  audioPlayer.load();
+  audioPlayer.play().catch(e => console.error('Error playing audio:', e));
+}
+function autoExpandTextArea(event) {
+    event.target.style.height = 'inherit'; // Reset the height
+    const computed = window.getComputedStyle(event.target);
+    // Calculate the height
+    const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+                   + event.target.scrollHeight
+                   + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+    event.target.style.height = `${height}px`;
+}
+
+// Attach the event listener to the textarea
+document.addEventListener('DOMContentLoaded', () => {
+    const userInput = document.getElementById('userInput');
+    userInput.addEventListener('input', autoExpandTextArea);
+});
+
+</script>
+</body>
+</html>
